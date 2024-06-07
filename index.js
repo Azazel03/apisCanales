@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const database = require("./dbconfig");
 const app = express();
 const port = process.env.port || 666;
@@ -6,6 +7,7 @@ const port = process.env.port || 666;
 app.listen(port, () => console.log(`Escuchando en puerto ${port}... `));
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/categoria", (req, res) => {
     database.query('SELECT * FROM categoria', (err, results) => {
