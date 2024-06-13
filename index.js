@@ -24,9 +24,17 @@ app.get("/canales/:id", (req, res) => {
     });
 });
 
+app.get("/canalesAll/:nombre", (req, res) => {
+    const { nombre } = req.params;
+    database.query('SELECT canal.id, canal.nombre, canal.url FROM canal INNER JOIN categoria ON canal.idcategoria = categoria.id WHERE categoria.nombre = ?', [nombre], (err, results) => {
+        if (err) throw err;
+        res.json(results[0]);
+    });
+});
+
 app.get("/canal/:id", (req, res) => {
     const { id } = req.params;
-    database.query('SELECT * FROM canal WHERE id = ?', [id], (err, results) => {
+    database.query('SELECT url FROM canal WHERE id = ?', [id], (err, results) => {
         if (err) throw err;
         res.json(results[0]);
     });
